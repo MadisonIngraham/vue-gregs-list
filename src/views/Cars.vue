@@ -5,10 +5,14 @@
         <h4>gregslist</h4>
         <div id="nav" class="d-flex justify-content-center">
           <div class="m-1">
-            <router-link v-if="$route.name != 'home'" :to="{name:'home'}">Home</router-link>
+            <router-link v-if="$route.name != 'home'" :to="{ name: 'home' }"
+              >Home</router-link
+            >
           </div>
           <div>
-            <router-link v-if="$route.name != 'cars'" :to="{name:'cars'}">Cars</router-link>
+            <router-link v-if="$route.name != 'cars'" :to="{ name: 'cars' }"
+              >Cars</router-link
+            >
           </div>
           <div class="m-1">
             <router-link to="/houses">Houses</router-link>
@@ -23,7 +27,7 @@
       <div class="col-8">insert all car posts here</div>
       <div class="col-3">
         <h5>Add Car For Sale</h5>
-        <form @submit.prevent="createCarPost">
+        <form @submit.prevent="createCar">
           <div class="form-group">
             <input
               required
@@ -66,7 +70,6 @@
           </div>
           <div class="form-group">
             <input
-              required
               class="form-control form-control-sm"
               type="text"
               placeholder="Image URL"
@@ -82,7 +85,7 @@
               v-model="newCar.description"
             ></textarea>
           </div>
-          <button type="button" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
@@ -97,15 +100,26 @@ export default {
       newCar: {
         make: "",
         model: "",
-        price: 0,
-        year: 0,
+        price: "",
+        year: "",
         imgUrl: "",
         description: ""
       }
     };
   },
   methods: {
-    createCarPost() {}
+    createCar() {
+      let car = { ...this.newCar };
+      this.$store.dispatch("createCar", car);
+      this.newCar = {
+        make: "",
+        model: "",
+        price: "",
+        year: "",
+        imgUrl: "",
+        description: ""
+      };
+    }
   }
 };
 </script>
